@@ -10,7 +10,7 @@
 <header>
     <h1> Benvenuto Amministratore</h1>
 </header>
-<!--   -->
+
 <main>
     <div class="buttons">
         <button id="viewUsersButton" onclick="window.location.href='VisualizzaUtentiServlet'">Visualizza Utenti</button>
