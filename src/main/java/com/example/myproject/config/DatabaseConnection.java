@@ -22,7 +22,7 @@ public class DatabaseConnection {
         }
         return connection;
     }
-
+/////
     public void setConnessione(Connection connection) {
         this.connection = connection;
     }
