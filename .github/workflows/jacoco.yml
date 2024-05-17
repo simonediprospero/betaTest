@@ -24,7 +24,7 @@ jobs:
 
       - name: Importa il database
         run: |
-          docker exec ${{ job.services.mysql.id }} /bin/bash -c "mysql -u root -padmin < /database/dumb.sql"
+          docker exec ${{ job.services.mysql.id }} /bin/bash -c "mysql -u root -padmin < database/dumb.sql"
         env:
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
