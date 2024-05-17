@@ -78,12 +78,23 @@ public class DatabaseConnection {
                 utente.setEmail(rs.getString("email"));
                 utente.setRole(Ruolo.valueOf(rs.getString("ruolo")));
                 utenti.add(utente);
-                System.out.println("Utente aggiunto: " + utente.getUsername()); // Aggiunto per il debug
+                System.out.println("utente aggiunto: " + utente.getUsername());
             }
         }
 
         return utenti;
     }
+
+    public void eliminaUtente(String username) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE FROM utenti WHERE username = ?";
+        try (Connection conn = getConnessione();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        }
+    }
+
     public void inserisciLibro(Libro libro) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO libri (titolo, autore, genere, anno, immagineCopertina, prezzo, disponibilita) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnessione();
@@ -97,6 +108,16 @@ public class DatabaseConnection {
             stmt.setDouble(6, libro.getPrezzo());
             stmt.setString(7, libro.getDisponibilita().toString()); // Nuovo campo
 
+            stmt.executeUpdate();
+        }
+    }
+
+    public void eliminaLibro(String titolo) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE FROM libri WHERE titolo = ?";
+        try (Connection conn = getConnessione();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, titolo);
             stmt.executeUpdate();
         }
     }
@@ -119,6 +140,7 @@ public class DatabaseConnection {
                 libro.setPrezzo(rs.getDouble("prezzo"));
                 libro.setDisponibilita(Disponibilita.valueOf(rs.getString("disponibilita"))); // Nuovo campo
                 libri.add(libro);
+                System.out.println("libro aggiunto: " + libro.getAutore());
             }
         }
 
