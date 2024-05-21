@@ -24,11 +24,11 @@ CREATE TABLE `utenti`
     `username` varchar(50)  NOT NULL,
     `email`    varchar(100) NOT NULL,
     `password` varchar(100) NOT NULL,
-    `ruolo`    enum('UTENTE_ADMIN', 'UTENTE_REGISTRATA') NOT NULL,
+    `ruolo`    enum('UTENTE_ADMIN', 'UTENTE_REGISTRATO') NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Inserimento di dati nella tabella utenti
 INSERT INTO `utenti` (`username`, `email`, `password`, `ruolo`)
-VALUES ('utente1', 'utente1@example.com', 'password1', 'UTENTE_REGISTRATA'),
+VALUES ('utente1', 'utente1@example.com', 'password1', 'UTENTE_REGISTRATO'),
        ('utente2', 'utente2@example.com', 'password2', 'UTENTE_ADMIN');

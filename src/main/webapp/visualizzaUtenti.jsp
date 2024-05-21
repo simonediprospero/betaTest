@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="visualizzaUtenti.css">
 </head>
 <body>
-<h1>Utenti Registrati</h1>
+<h1>Utenti Nel Sistema</h1>
 <div class="table-container">
     <table>
         <tr>
