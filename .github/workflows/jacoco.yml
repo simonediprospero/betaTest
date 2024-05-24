@@ -31,9 +31,9 @@ jobs:
       - name: Check code coverage
         run: |
           COVERAGE_PERCENTAGE=$(grep -oP 'Total.*?(\d+)%' target/site/jacoco/index.html | head -n 1 | grep -oP '\d+')
-          echo "Line Coverage: $COVERAGE_PERCENTAGE%"
-          if [ "$COVERAGE_PERCENTAGE" -lt 80]; then
-            echo "Code coverage ($COVERAGE_PERCENTAGE%) is below the acceptable threshold of 60%."
+          echo "Line Coverage: ${COVERAGE_PERCENTAGE}%"
+          if [ "${COVERAGE_PERCENTAGE}" -lt 80 ]; then
+            echo "Code coverage (${COVERAGE_PERCENTAGE}%) is below the acceptable threshold of 80%."
             exit 1
           fi
       - name: Archive code coverage results
