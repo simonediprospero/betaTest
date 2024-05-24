@@ -30,7 +30,7 @@ jobs:
         run: mvn test jacoco:report
       - name: Check code coverage
         run: |
-          COVERAGE_PERCENTAGE=$(grep -oP 'Total.*?(\d+)%' target/site/jacoco/index.html | head -n 1 | grep -oP '\d+')
+          COVERAGE_PERCENTAGE=$(sed -n 's/.*Total[^0-9]*\([0-9]*\).*/\1/p' target/site/jacoco/index.html)
           echo "Line Coverage: ${COVERAGE_PERCENTAGE}%"
           if [ "${COVERAGE_PERCENTAGE}" -lt 80 ]; then
             echo "Code coverage (${COVERAGE_PERCENTAGE}%) is below the acceptable threshold of 80%."
