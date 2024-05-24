@@ -37,7 +37,7 @@ jobs:
           TOTAL=$((COVERAGE + MISSED))
           PERCENTAGE=$((COVERAGE * 100 / TOTAL))
           echo "Coverage: $PERCENTAGE%"
-          if [ "$PERCENTAGE" -lt 60 ]; then
+          if [ "$PERCENTAGE" -lt 80 ]; then
             echo "Code coverage ($PERCENTAGE%) is below the acceptable threshold of 60%."
             exit 1
           fi
