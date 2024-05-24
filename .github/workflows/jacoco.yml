@@ -32,13 +32,13 @@ jobs:
         run: sudo apt-get install -y libxml2-utils
       - name: Check code coverage
         run: |
-          COVERAGE=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@covered)" target/site/jacoco/jacoco.xml)
-          MISSED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@missed)" target/site/jacoco/jacoco.xml)
-          TOTAL=$((COVERAGE + MISSED))
-          PERCENTAGE=$((COVERAGE * 100 / TOTAL))
-          echo "Coverage: $PERCENTAGE%"
-          if [ "$PERCENTAGE" -lt 80 ]; then
-            echo "Code coverage ($PERCENTAGE%) is below the acceptable threshold of 60%."
+          COVERED_LINES=$(xmllint --xpath "string(//counter[@type='LINE']/@covered)" target/site/jacoco/jacoco.xml)
+          MISSED_LINES=$(xmllint --xpath "string(//counter[@type='LINE']/@missed)" target/site/jacoco/jacoco.xml)
+          TOTAL_LINES=$((COVERED_LINES + MISSED_LINES))
+          COVERAGE_PERCENTAGE=$((COVERED_LINES * 100 / TOTAL_LINES))
+          echo "Line Coverage: $COVERAGE_PERCENTAGE%"
+          if [ "$COVERAGE_PERCENTAGE" -lt 80 ]; then
+            echo "Code coverage ($COVERAGE_PERCENTAGE%) is below the acceptable threshold of 60%."
             exit 1
           fi
       - name: Archive code coverage results
