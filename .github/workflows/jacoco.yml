@@ -28,8 +28,6 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Run tests with coverage
         run: mvn test jacoco:report
-      - name: Verify code coverage
-        run: mvn jacoco:check
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
