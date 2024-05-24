@@ -28,16 +28,11 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Run tests with coverage
         run: mvn test jacoco:report
-      - name: Install xmllint
-        run: sudo apt-get install -y libxml2-utils
       - name: Check code coverage
         run: |
-          COVERED_LINES=$(xmllint --xpath "string(//counter[@type='LINE']/@covered)" target/site/jacoco/jacoco.xml)
-          MISSED_LINES=$(xmllint --xpath "string(//counter[@type='LINE']/@missed)" target/site/jacoco/jacoco.xml)
-          TOTAL_LINES=$((COVERED_LINES + MISSED_LINES))
-          COVERAGE_PERCENTAGE=$((COVERED_LINES * 100 / TOTAL_LINES))
+          COVERAGE_PERCENTAGE=$(grep -oP 'Total.*?(\d+)%' target/site/jacoco/index.html | head -n 1 | grep -oP '\d+')
           echo "Line Coverage: $COVERAGE_PERCENTAGE%"
-          if [ "$COVERAGE_PERCENTAGE" -lt 80 ]; then
+          if [ "$COVERAGE_PERCENTAGE" -lt 80]; then
             echo "Code coverage ($COVERAGE_PERCENTAGE%) is below the acceptable threshold of 60%."
             exit 1
           fi
