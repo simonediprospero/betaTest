@@ -28,6 +28,19 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Run tests with coverage
         run: mvn test jacoco:report
+      - name: Install xmllint
+        run: sudo apt-get install -y libxml2-utils
+      - name: Check code coverage
+        run: |
+          COVERAGE=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@covered)" target/site/jacoco/jacoco.xml)
+          MISSED=$(xmllint --xpath "string(//counter[@type='INSTRUCTION']/@missed)" target/site/jacoco/jacoco.xml)
+          TOTAL=$((COVERAGE + MISSED))
+          PERCENTAGE=$((COVERAGE * 100 / TOTAL))
+          echo "Coverage: $PERCENTAGE%"
+          if [ "$PERCENTAGE" -lt 60 ]; then
+            echo "Code coverage ($PERCENTAGE%) is below the acceptable threshold of 60%."
+            exit 1
+          fi
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
